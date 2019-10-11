@@ -64,7 +64,7 @@ async def get_link(bot, update):
         reply_message = update
     else:
         return False
-    if str(update.from_user.id) in Config.AUTH_USERS:
+    if str(update.from_user.id) in Config.BANNED_USERS:
         await bot.send_message(
             chat_id=update.chat.id,
             text=Translation.ABUSIVE_USERS,
