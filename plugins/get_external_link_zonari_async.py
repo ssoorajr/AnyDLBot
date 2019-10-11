@@ -64,7 +64,7 @@ async def get_link(bot, update):
         reply_message = update
     else:
         return False
-    if update.from_user.id not in Config.AUTH_USERS:
+    if update.from_user.id in Config.BANNED_USERS:
         await bot.delete_messages(
             chat_id=update.chat.id,
             message_ids=update.message_id,
