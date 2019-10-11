@@ -64,13 +64,11 @@ async def get_link(bot, update):
         reply_message = update
     else:
         return False
-    if str(update.from_user.id) in Config.BANNED_USERS:
-        await bot.send_message(
+    if update.from_user.id not in Config.AUTH_USERS:
+        await bot.delete_messages(
             chat_id=update.chat.id,
-            text=Translation.ABUSIVE_USERS,
-            reply_to_message_id=update.message_id,
-            disable_web_page_preview=True,
-            parse_mode="html"
+            message_ids=update.message_id,
+            revoke=True
         )
         return   
     TRChatBase(update.from_user.id, update.text, "getlink")
