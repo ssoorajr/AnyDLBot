@@ -33,14 +33,14 @@ from helper_funcs.chat_base import TRChatBase
 from helper_funcs.display_progress import progress_for_pyrogram
 
 
-@pyrogram.Client.on_message()
-def get_link(bot, update):
-    # print(update)
-    if update.text == "/start":
-        bot.send_message(
+@pyrogram.Client.on_message(pyrogram.Filters.command(["getlink"]))
+async def get_link(bot, update):
+    if update.from_user.id not in Config.AUTH_USERS:
+        await bot.delete_messages(
             chat_id=update.chat.id,
-            text=Translation.START_TEXT,
-            reply_to_message_id=update.message_id
+            message_ids=update.message_id,
+            revoke=True
+        
         )
         return False
     elif update.text == "/help" or update.text == "/about":
